@@ -1,0 +1,30 @@
+* {
+  font-family: "Montserrat", sans-serif;
+}
+
+html, body {
+  padding: 0;
+  margin: 0;
+  background-color: #f8f9fb;
+  color: black;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  margin-top: 100px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 50px;
+}
+
+canvas {
+  border: 1px solid white;
+}
+
+/*# sourceMappingURL=main.css.map */
