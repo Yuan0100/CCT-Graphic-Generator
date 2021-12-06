@@ -7,12 +7,6 @@ class Shape{
       size: args.size,
       ratio: args.ratio
     }
-    // this.shape = args.shape
-    // this.count = args.count
-    // this.system = args.system
-    // this.size = args.size
-
-    // this.posArr = []
     this.posVecArr = []
     this.posVecArr2 = []
     this.sizeArr = []
@@ -42,7 +36,7 @@ class Shape{
         posVec2: this.posVecArr2[i],
         size: this.sizeArr[i],
         size2: this.sizeArr2[i],
-        ratio: ratio*random(0.5,1.2)
+        ratio: ratio*pow(ratio, int(random(0,2)))
       })
     }
 
@@ -69,7 +63,7 @@ class Shape{
     let result = []
     
     for(var i=0; i<count; i++){
-      result.push(size/Math.pow(1.618, int(random(0, 5))))
+      result.push(size*pow(this.baseSettings.ratio, int(random(0, 4))))
       // result.push(size/Math.pow(1.618, int(random(0, 3))))
     }
     return result
@@ -78,9 +72,10 @@ class Shape{
   // --- 畫形狀
   drawArc(shapeObj){
     let ratio = shapeObj.ratio
-    let size = shapeObj.size*30
+    let size = shapeObj.size
     let pos = shapeObj.posVec
-    let angle = map(ratio, 0.5, 1.2, HALF_PI, PI)
+    let rotateAngle = map(ratio, 1, 5, 0, 2*PI)
+    let angle = map(size, 30, 500, HALF_PI, 3*HALF_PI)
 
     if(pos.x == 500){
       pos.x-grid.w/grid.cNum
@@ -96,17 +91,22 @@ class Shape{
     }
 
     push()
-      fill(bgColor)
       translate(pos.x, pos.y)
-      rotate(angle)
-      arc(0, 0, size, size, 0, angle)
+      rotate(rotateAngle)
+      if(ratio == 1.618){
+        noFill()
+        arc(0, 0, size, size, 0, angle)
+      }else{
+        fill(bgColor)
+        arc(0, 0, size, size, 0, angle, PIE)
+      }
     pop()
   }
   drawEllipse(shapeObj){
     let pos = shapeObj.posVec
     let ratio = shapeObj.ratio
-    let size1 = shapeObj.size*30
-    let size2 = shapeObj.size2*30
+    let size1 = shapeObj.size
+    let size2 = shapeObj.size2
     let angle = map(ratio, 0.5, 1.2, 0, PI)
     push()
       fill(bgColor)
@@ -117,7 +117,7 @@ class Shape{
   }
   drawCircle(shapeObj){
     let pos = shapeObj.posVec
-    let size = shapeObj.size*30
+    let size = shapeObj.size
     push()
       fill(bgColor)
       translate(pos.x, pos.y)
@@ -135,7 +135,6 @@ class Shape{
       translate(center.x, center.y)
       rotate(angle)
       noFill()
-      stroke(0)
       line(0, 0, v.x, v.y)
       line(0, 0, v2.x, v2.y)
     pop()
@@ -172,6 +171,9 @@ class Shape{
     let ratio = shapeObj.ratio
     let center = shapeObj.posVec
     let v = p5.Vector.sub(shapeObj.posVec2, center).div(4)
+    if(shapeObj.posVec2.dist(center)<100){
+      v.mult(ratio)
+    }
 
     let point1 = p5.Vector.add(center, v.copy().mult(ratio))
     let point2 = p5.Vector.add(center, v.rotate(angle))
@@ -183,6 +185,9 @@ class Shape{
     push()
       fill(bgColor)
       quad(point1.x, point1.y, point2.x, point2.y, point3.x, point3.y, point4.x, point4.y)
+      // fill(0)
+      // textSize(16)
+      // text(`${center.x},${center.y}`,center.x,center.y)
       // strokeWeight(3)
       // stroke('red')
       // line(center.x, center.y, point1.x, point1.y)
@@ -192,15 +197,12 @@ class Shape{
       // line(center.x, center.y, point3.x, point3.y)
       // stroke('blue')
       // line(center.x, center.y, point4.x, point4.y)
-      // strokeWeight(10)
-      // stroke(0)
-      // point(0,0)
     pop()
   }
   drawRect(shapeObj){
     let pos = shapeObj.posVec
-    let size = shapeObj.size*30
-    let size2 = shapeObj.size2*30
+    let size = shapeObj.size
+    let size2 = shapeObj.size2
     push()
       translate(pos.x, pos.y)
       fill(bgColor)
@@ -209,7 +211,7 @@ class Shape{
   }
   drawSquare(shapeObj){
     let pos = shapeObj.posVec
-    let size = shapeObj.size*30
+    let size = shapeObj.size
     let angle = map(shapeObj.size, 0, 15, 0, HALF_PI)
     push()
       fill(bgColor)

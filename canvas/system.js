@@ -1,7 +1,7 @@
 class Grid{
   constructor(args){
-    this.canvasWidth = args.w
-    this.canvasHeight = args.h
+    this.canvasWidth = args.w*1.5
+    this.canvasHeight = args.h*1.5
     this.columnNum = args.cNum
     this.rowNum = args.rNum
   }
