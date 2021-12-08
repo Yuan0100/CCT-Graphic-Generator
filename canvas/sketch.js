@@ -56,6 +56,8 @@ let randomShape2
 let cnv
 
 function setup() {
+  // pixelDensity(3)
+
   cnv = createCanvas(grid.canvasWidth, grid.canvasHeight);
   // gridPos = grid.getRandomPos(random(randomSystemArr))
   randomShape1 = random(randomShapeArr)
@@ -142,6 +144,9 @@ function draw(){
     // --- 開始畫
     angleMode(RADIANS)
     stroke(strokeColor)
+    
+    // strokeWeight(5)
+
     push()
       graphics.forEach(d => {
         if(d.shape === 'arc'){
